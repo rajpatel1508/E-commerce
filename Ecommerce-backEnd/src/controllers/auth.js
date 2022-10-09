@@ -1,9 +1,12 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const env = require("dotenv");
+const { validationResult } = require('express-validator')
 
 //Function to signup user
 exports.signup = (req, res) => {
+    const errors = validationResult(req);
+    return res.status(400).json({ errors: errors.array() })
     User.findOne({ email: req.body.email })
         .exec((error, user) => {
             if (user) {
@@ -49,7 +52,7 @@ exports.signin = (req, res) => {
             }
             if (user) {
                 if (user.authenticate(req.body.password)) {
-                    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     const { _id, firstname, lastname, email, role, fullname } = user;
                     return res.status(200).json({
                         token,
@@ -68,10 +71,3 @@ exports.signin = (req, res) => {
         });
 };
 
-//Middleware Function for verification
-exports.requiresignin = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = user;
-    next();
-}
