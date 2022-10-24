@@ -4,39 +4,36 @@ exports.addItemToCart = (req, res) => {
     //check if cart already exist for user
     Cart.findOne({ user: req.user._id }).exec((error, cart) => {
         if (error) return res.status(400).json({ error });
-        console.log(cart);
         if (cart) {
             //if it already exist just update the cart
             const product = req.body.cartItems.products;
             const item = cart.cartItems.find(c => c.products == product);
+            let condition, update;
             if (item) {
-                Cart.findOneAndUpdate({ "user": req.user._id, "cartItems.products": product }, {
+                condition = { "user": req.user._id, "cartItems.product": product };
+                update = {
                     "$set": {
                         "cartItems": {
                             ...req.body.cartItems,
                             quantity: item.quantity + req.body.cartItems.quantity
                         }
                     }
-                })
-                    .exec((error, _cart) => {
-                        if (error) return res.status(400).json({ error });
-                        if (_cart) {
-                            return res.status(201).json({ cart: _cart });
-                        }
-                    })
+                };
             } else {
-                Cart.findOneAndUpdate({ user: req.user._id }, {
+                condition = { user: req.user._id };
+                update = {
                     "$push": {
                         "cartItems": req.body.cartItems
                     }
-                })
-                    .exec((error, _cart) => {
-                        if (error) return res.status(400).json({ error });
-                        if (_cart) {
-                            return res.status(201).json({ cart: _cart });
-                        }
-                    })
+                };
             }
+            Cart.findOneAndUpdate(condition, update)
+                .exec((error, _cart) => {
+                    if (error) return res.status(400).json({ error });
+                    if (_cart) {
+                        return res.status(201).json({ cart: _cart });
+                    }
+                })
 
         } else {
             //else make new cart

@@ -3,6 +3,9 @@ const express = require("express");
 const env = require("dotenv");
 const app = express();
 const mongoose = require('mongoose');
+const path = require('path');
+const cors = require('cors');
+
 // const bodyParser = require('body-parser')
 //Routes
 const authRoutes = require('./routes/auth');
@@ -15,15 +18,16 @@ const cartRoutes = require('./routes/cart')
 env.config();
 
 //Mongoose connection
-mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true }).then(()=> {
+mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("Database connected");
 });
 
-// app.use(bodyParser.urlencoded({ extended: true, }))
 //Middleware to parse json data
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use(cors());
+app.use('/public', express.static(path.join(__dirname, 'uploads')));
 //Prefixing routes with /api
 app.use('/api', authRoutes);
 app.use('/api', adminRoutes);
