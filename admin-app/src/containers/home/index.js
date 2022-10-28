@@ -1,18 +1,12 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
+import { NavLink } from 'react-router-dom';
 import Layout from '../../components/layout'
 import './style.css';
 export default function Home() {
 
   return (
-    <Layout>
-      <Container fluid>
-        <Row>
-          <Col md={2} className="sidebar">Side Bar</Col>
-          <Col md={10} style={{ marginLeft: 'auto' }} >Container</Col>
-        </Row>
-      </Container>
-
+    <Layout sidebar>
       {/* <h1 style={{ margin: '5rem' }} className='text-center'>
         Admin Dashboard
       </h1>

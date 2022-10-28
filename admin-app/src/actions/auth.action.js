@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosInstance from "../helpers/axios"
 import { authConstants } from "./constants"
 
@@ -32,36 +33,6 @@ export const login = (user) => {
     }
 }
 
-// export const signup = (user) => {
-//     console.log(user);
-//     return async (dispatch) => {
-//         dispatch({ type: authConstants.LOGIN_REQUEST })
-//         const res = await axiosInstance.post('/admin/signup', {
-//             ...user
-//         })
-//         if (res.status === 200) {
-//             const { message } = res.data;
-
-//             dispatch({
-//                 type: authConstants.LOGIN_SUCCESS,
-//                 payload: {
-//                     token,
-//                     user
-//                 }
-//             });
-//         } else {
-//             if (res.status === 400) {
-//                 dispatch({
-//                     type: authConstants.LOGIN_FAILURE,
-//                     payload: {
-//                         error: res.data.error
-//                     }
-//                 })
-//             }
-//         }
-//     }
-// }
-
 export const isUserLoggedIn = () => {
     return async dispatch => {
         const token = localStorage.getItem('token');
@@ -87,9 +58,21 @@ export const isUserLoggedIn = () => {
 
 export const signout = () => {
     return async dispatch => {
-        localStorage.clear();
         dispatch({
             type: authConstants.LOGOUT_REQUEST
         });
+        const res = await axiosInstance.post('/admin/signout');
+        if (res.status === 200) {
+            localStorage.clear();
+            dispatch({
+                type: authConstants.LOGOUT_SUCCESS
+            });
+        } else {
+            dispatch({
+                type: authConstants.LOGOUT_FAILURE,
+                payload: { error: res.data.error }
+            });
+        }
+
     }
 }

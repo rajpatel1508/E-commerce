@@ -9,7 +9,10 @@ const initstate = {
         picture: ''
     },
     authenticate: false,
-    authenticating: false
+    authenticating: false,
+    loading: false,
+    error: null,
+    message: ''
 }
 
 export default (state = initstate, action) => {
@@ -31,7 +34,20 @@ export default (state = initstate, action) => {
             break;
         case authConstants.LOGOUT_REQUEST:
             state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case authConstants.LOGOUT_SUCCESS:
+            state = {
                 ...initstate
+            }
+            break;
+        case authConstants.LOGOUT_FAILURE:
+            state = {
+                ...initstate,
+                error: action.payload.error,
+                loading: false
             }
             break;
     }
