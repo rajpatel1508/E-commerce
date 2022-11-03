@@ -1,11 +1,13 @@
 const User = require('../../models/user');
 const jwt = require('jsonwebtoken');
 const env = require("dotenv");
+const bcrypt = require('bcrypt');
+const shortid = require('shortid');
 
 //Function to signup user
 exports.signup = (req, res) => {
     User.findOne({ email: req.body.email })
-        .exec((error, user) => {
+        .exec(async (error, user) => {
             if (user) {
                 return res.status(400).json({
                     message: 'Admin already registered'
@@ -17,12 +19,13 @@ exports.signup = (req, res) => {
                 email,
                 password
             } = req.body;
+            const hash_password = await bcrypt.hash(password, 10);
             const _user = new User({
                 firstname,
                 lastname,
                 email,
-                password,
-                username: Math.random().toString(),
+                hash_password,
+                username: shortid.generate(),
                 role: 'admin'
             });
             console.log(_user);
