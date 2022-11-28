@@ -29,7 +29,7 @@ exports.signup = (req, res) => {
                 hash_password,
                 username: shortid.generate()
             });
-            console.log(_user);
+            // console.log(_user);
             _user.save((error, data) => {
                 if (data) {
                     return res.status(201).json({

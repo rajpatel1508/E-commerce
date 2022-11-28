@@ -1,6 +1,6 @@
 const express = require("express");
 const { requiresignin, adminMiddleware } = require("../common-middleware");
-const { createCategory, getCategories } = require("../controllers/category");
+const { createCategory, getCategories, updateCategories, deleteCategories } = require("../controllers/category");
 const router = express.Router();
 const multer = require('multer');
 const shortid = require('shortid');
@@ -21,5 +21,9 @@ const upload = multer({ storage: storage });
 router.post('/category/create',requiresignin, adminMiddleware, upload.single("categoryImage") , createCategory);
 //API to get categories
 router.get('/category/getcategory', getCategories);
+//API to update category
+router.post('/category/update', requiresignin, adminMiddleware, upload.array("categoryImage"), updateCategories);
+//API to delete category
+router.post('/category/delete', requiresignin, adminMiddleware, deleteCategories);
 
 module.exports = router;

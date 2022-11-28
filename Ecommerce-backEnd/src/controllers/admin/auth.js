@@ -28,7 +28,7 @@ exports.signup = (req, res) => {
                 username: shortid.generate(),
                 role: 'admin'
             });
-            console.log(_user);
+            // console.log(_user);
             _user.save((error, data) => {
                 if (data) {
                     return res.status(201).json({
