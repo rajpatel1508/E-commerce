@@ -15,6 +15,7 @@ function createCategories(categories, parentId = null) {
             _id: cate._id,
             name: cate.name,
             slug: cate.slug,
+            type: cate.type,
             parentId: cate.parentId,
             children: createCategories(categories, cate._id)
         });
@@ -87,7 +88,7 @@ exports.updateCategories = async (req, res) => {
 exports.deleteCategories = async (req, res) => {
     const { ids } = req.body.payload;
     const deletedCategories = [];
-    for (let i = 0; i < ids.length; i++){
+    for (let i = 0; i < ids.length; i++) {
         const deleteCategory = await Category.findOneAndDelete({ _id: ids[i]._id });
         deletedCategories.push(deleteCategory);
     }

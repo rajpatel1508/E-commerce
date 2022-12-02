@@ -18,8 +18,8 @@ export default function NewModal(props) {
                         </Button>
                     )
                         :
-                        <Button variant="primary" onClick={props.handleClose}>
-                            Save Changes
+                        <Button style={{backgroundColor: '#333'}} variant="primary" {...props} className='btn-sm' onClick={props.onSubmit}>
+                            Save
                         </Button>
                 }
 

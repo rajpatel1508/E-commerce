@@ -1,4 +1,19 @@
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const shortid = require('shortid');
+const path = require('path');
+
+//Function to create storage for files
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(path.dirname(__dirname), 'uploads'));
+    },
+    filename: function (req, file, cb) {
+        cb(null, shortid.generate() + '-' + file.originalname);
+    }
+})
+//Assigning storage
+exports.upload = multer({ storage: storage });
 
 //Middleware Function for verification
 exports.requiresignin = (req, res, next) => {

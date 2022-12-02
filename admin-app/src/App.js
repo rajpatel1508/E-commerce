@@ -10,6 +10,7 @@ import { getAllCategory, getInitialData, isUserLoggedIn } from './actions';
 import Products from './containers/products';
 import Orders from './containers/orders';
 import Category from './containers/category';
+import NewPage from './containers/NewPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,8 +20,10 @@ function App() {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    dispatch(getInitialData());
-  }, []);
+    if (auth.authenticate) {
+      dispatch(getInitialData());
+    }
+  }, [auth.authenticate]);
 
   return (
     <div className="App">
@@ -30,6 +33,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<PrivateRoute />} >
           <Route path="/" element={<Home />} />
+        </Route>
+        <Route path="/page" element={<PrivateRoute />} >
+          <Route path="/page" element={<NewPage />} />
         </Route>
         <Route path="/products" element={<PrivateRoute />} >
           <Route path="/products" element={<Products />} />
