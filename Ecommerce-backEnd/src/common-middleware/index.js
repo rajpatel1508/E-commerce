@@ -18,12 +18,16 @@ exports.upload = multer({ storage: storage });
 //Middleware Function for verification
 exports.requiresignin = (req, res, next) => {
     if (req.headers.authorization) {
-        const token = req.headers.authorization.split(" ")[1];
-        const user = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = user;
+        try {
+            const token = req.headers.authorization.split(" ")[1];
+            const user = jwt.verify(token, process.env.JWT_SECRET);
+            req.user = user;
+        } catch {
+            res.redirect('admin/signout');
+        }
     }
     else {
-        return res.status(400).json({ message: 'Authorization required' });
+        res.status(400).json({ message: 'Authorization required' });
     }
     next();
 }
