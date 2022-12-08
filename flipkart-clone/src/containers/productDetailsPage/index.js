@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { IoIosArrowForward, IoIosStar, IoMdCart } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchParams } from 'react-router-dom';
-import { getProductDetailsById } from '../../actions';
+import { useParams } from 'react-router-dom';
+import { addToCart, getProductDetailsById } from '../../actions';
 import Layout from '../../components/Layout'
 import { MaterialButton } from '../../components/MaterialUI';
 import './style.css'
@@ -11,9 +11,9 @@ import { AiFillThunderbolt } from "react-icons/ai";
 
 export default function ProductDetailsPage(props) {
     const dispatch = useDispatch();
-    const [searchParams] = useSearchParams();
-    const productId = searchParams.get('productId');
+    const { productId } = useParams();
     const product = useSelector(state => state.product);
+    console.log({ product ,productId });
 
     useEffect(() => {
         const payload = {
@@ -22,7 +22,7 @@ export default function ProductDetailsPage(props) {
             }
         }
         dispatch(getProductDetailsById(payload));
-    }, [])
+    }, []);
 
     if (Object.keys(product.productDetails).length === 0) {
         return null;
@@ -57,12 +57,12 @@ export default function ProductDetailsPage(props) {
                                     marginRight: "5px",
                                 }}
                                 icon={<IoMdCart />}
-                                // onClick={() => {
-                                //     const { _id, name, price } = product.productDetails;
-                                //     const img = product.productDetails.productPictures[0].img;
-                                //     dispatch(addToCart({ _id, name, price, img }));
-                                //     props.history.push(`/cart`);
-                                // }}
+                                onClick={() => {
+                                    const { _id, name, price } = product.productDetails;
+                                    const img = product.productDetails.productPictures[0].img;
+                                    dispatch(addToCart({ _id, name, price, img }));
+                                    props.history.push(`/cart`);
+                                }}
                             />
                             <MaterialButton
                                 title="BUY NOW"

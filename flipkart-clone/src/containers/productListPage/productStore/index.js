@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { getProductsBySlug } from '../../../actions';
+import Card from '../../../components/UI/card';
 import { generatePublicUrl } from '../../../urlConfig';
 
 
 export default function ProductStore(props) {
-
+    const { slug } = useParams();
     const product = useSelector(state => state.product);
-    // console.log(product);
+    console.log(product);
     const [priceRange, setPriceRange] = useState({
         under5k: 5000,
         under10k: 10000,
@@ -16,7 +17,6 @@ export default function ProductStore(props) {
         under20k: 20000,
         under30k: 30000
     })
-    const { slug } = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getProductsBySlug(slug));
@@ -27,11 +27,11 @@ export default function ProductStore(props) {
             {
                 Object.keys(product.productsByPrice).map((key, index) => {
                     return (
-                        <div className='card'>
-                            <div className='cardHeader'>
-                                <div>{slug} Mobile under {priceRange[key]}</div>
-                                <button>view all</button>
-                            </div>
+                        <Card
+                            headerLeft={`${slug} Mobile under ${priceRange[key]}`}
+                            headerRight={<button>view all</button>}
+                            style={{ width: 'calc(100%-20px)', margin: '20px' }}
+                        >
                             <div style={{ display: 'flex' }}>
                                 {
                                     product.productsByPrice[key].map(product =>
@@ -56,9 +56,8 @@ export default function ProductStore(props) {
                                         </Link>
                                     )
                                 }
-
                             </div>
-                        </div>);
+                        </Card>);
                 })
             }
         </>

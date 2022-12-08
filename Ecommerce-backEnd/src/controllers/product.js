@@ -61,6 +61,7 @@ exports.getProductsBySlug = (req, res) => {
 
 exports.getProductDetailsById = (req, res) => {
         const { productId } = req.params;
+        console.log('here im')
         if (productId) {
                 Product.findOne({ _id: productId }).exec((error, product) => {
                         if (error) return res.status(400).json({ error });

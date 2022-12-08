@@ -22,6 +22,6 @@ const upload = multer({ storage: storage});
 router.post('/product/create', requiresignin, adminMiddleware, upload.array('productPictures'), createProduct);
 //API to get Products
 router.get('/product/:slug', getProductsBySlug);
-router.get("/product/:productId", getProductDetailsById);
+router.get('/product/:productId', getProductDetailsById);
 
 module.exports = router;
