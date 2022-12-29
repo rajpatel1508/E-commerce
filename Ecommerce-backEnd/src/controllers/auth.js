@@ -7,7 +7,7 @@ const shortid = require('shortid');
 
 //Function to signup user
 exports.signup = (req, res) => {
-    
+
     User.findOne({ email: req.body.email })
         .exec(async (error, user) => {
             if (user) {
@@ -48,12 +48,14 @@ exports.signup = (req, res) => {
 //Function to signin user
 exports.signin = (req, res) => {
     User.findOne({ email: req.body.email })
-        .exec((error, user) => {
+        .exec(async (error, user) => {
             if (error) {
                 return res.status(400).json({ error });
             }
             if (user) {
-                if (user.authenticate(req.body.password) && user.role === 'user') {
+                const isPassword = await user.authenticate(req.body.password);
+
+                if (isPassword && user.role === 'user') {
                     const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     const { _id, firstname, lastname, email, role, fullname } = user;
                     return res.status(200).json({

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSearchParams } from 'react-router-dom';
 import Layout from '../../components/Layout'
+import ClothingAndAccessories from './ClothingAndAccessories';
 import ProductPage from './productPage';
 import ProductStore from './productStore';
 import './style.css';
@@ -11,8 +12,9 @@ export default function ProductListPage(props) {
         cid: searchParams.get('cid'),
         type: searchParams.get('type')
     };
-    let content = null;
+
     const renderProduct = () => {
+        let content = null;
         switch (params.type) {
             case 'store':
                 content = <ProductStore {...props} />;
@@ -21,7 +23,7 @@ export default function ProductListPage(props) {
                 content = <ProductPage {...props} />
                 break;
             default:
-                content = null;
+                content = <ClothingAndAccessories {...props} />;
         }
         return content;
     }

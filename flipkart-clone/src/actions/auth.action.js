@@ -1,6 +1,5 @@
 import axiosInstance from "../helpers/axios";
 import { authConstants, cartConstants } from "./constants";
-// import axiosI from "../helpers/axios";
 
 // new update signup action
 export const signup = (user) => {
@@ -38,7 +37,7 @@ export const signup = (user) => {
 export const login = (user) => {
     return async (dispatch) => {
         dispatch({ type: authConstants.LOGIN_REQUEST });
-        const res = await axios.post(`/signin`, {
+        const res = await axiosInstance.post(`/signin`, {
             ...user,
         });
 
