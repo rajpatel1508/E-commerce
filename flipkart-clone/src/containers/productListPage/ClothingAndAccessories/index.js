@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsBySlug } from "../../../actions";
-import Card from "../../../components/UI/Card";
+import Card from "../../../components/UI/card";
 import { BiRupee } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./style.css";
 
 const ClothingAndAccessories = (props) => {
+    const [searchParams] = useSearchParams();
     const product = useSelector((state) => state.product);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const { match } = props;
-        dispatch(getProductsBySlug(match.params.slug));
+        dispatch(getProductsBySlug(searchParams.get('slug')));
     }, []);
 
     return (

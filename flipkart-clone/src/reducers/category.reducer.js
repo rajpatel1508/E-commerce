@@ -20,7 +20,6 @@ const buildNewCategories = (parentId, categories, category) => {
             }
         ];
     }
-    console.log(categories);
     for (let cat of categories) {
         if (cat._id == parentId) {
             mycategories.push({
@@ -45,7 +44,6 @@ const buildNewCategories = (parentId, categories, category) => {
 }
 
 export default (state = initState, action) => {
-    // console.log(action.payload.categories)
     switch (action.type) {
         case categoryConstants.GET_ALL_CATEGORIES_SUCCESS:
             state = {

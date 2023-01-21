@@ -23,6 +23,7 @@ export default function Category() {
     const [expandedArray, setExpandedArray] = useState([]);
     const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
     const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
+    const [show, setShow] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,7 +32,6 @@ export default function Category() {
         }
     }, [category.loading])
 
-    const [show, setShow] = useState(false);
     const handleClose = () => {
         const form = new FormData();
         if (categoryName === "") {
@@ -47,7 +47,9 @@ export default function Category() {
         setparentCategoryId('');
         setShow(false);
     }
+
     const handleShow = () => setShow(true);
+
     const renderCategories = (categories) => {
         let mycategories = [];
         for (let category of categories) {
@@ -61,6 +63,7 @@ export default function Category() {
         }
         return mycategories;
     }
+
     const createCategoryList = (categories, option = []) => {
         for (let category of categories) {
             option.push({
@@ -75,6 +78,7 @@ export default function Category() {
         }
         return option;
     }
+
     const handleCategoryImage = (e) => {
         setcategoryImage(e.target.files[0]);
     }
@@ -90,13 +94,13 @@ export default function Category() {
         const expandedArray = [];
         checked.length > 0 && checked.forEach((categoryId, index) => {
             const category = categories.find((category, _index) => categoryId == category.value)
-            console.log(category);
+            
             category && checkedArray.push(category);
         })
 
         expanded.length > 0 && expanded.forEach((categoryId, index) => {
             const category = categories.find((category, _index) => categoryId == category.value)
-            console.log(category);
+            
             category && expandedArray.push(category);
         })
         setCheckedArray(checkedArray);
@@ -114,7 +118,6 @@ export default function Category() {
     }
 
     const updateCategoriesForm = () => {
-
         const form = new FormData();
         expandedArray.forEach((item, index) => {
             form.append('_id', item.value);

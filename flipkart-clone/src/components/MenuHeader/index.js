@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getAllCategory } from '../../actions';
 import './style.css'
 
@@ -9,13 +10,14 @@ export default function MenuHeader() {
   useEffect(() => {
     dispatch(getAllCategory());
   }, []);
+
   const renderCategories = (categories) => {
     let mycategories = [];
     for (let category of categories) {
       mycategories.push(
         <li key={category.name}>
           {
-            category.parentId ? <a href={`/${category.slug}?cid=${category._id}&type=${category.type}`}>{category.name}</a> :
+            category.parentId ? <Link to={`/${category.slug}?cid=${category._id}&type=${category.type}`}>{category.name}</Link> :
               <span>{category.name}</span>
           }
           {category.children.length > 0 ? (<ul>{renderCategories(category.children)} </ul>) : null}
@@ -24,6 +26,7 @@ export default function MenuHeader() {
     }
     return mycategories;
   }
+  
   return (
     <div className='menuheader'>
       <ul>

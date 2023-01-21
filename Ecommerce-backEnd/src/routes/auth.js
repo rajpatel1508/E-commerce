@@ -8,10 +8,4 @@ router.post('/signin', validateSigninRequest, isRequestValidated, signin);
 
 router.post('/signup', validateSignupRequest, isRequestValidated, signup);
 
-// router.post('/profile', requiresignin, (req, res) => {
-//     res.status(200).json({
-//         message: 'profile'
-//     });
-// })
-
 module.exports = router;

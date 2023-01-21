@@ -1,15 +1,15 @@
 const express = require("express");
-const { requireSignin, adminMiddleware } = require("../../common-middleware");
+const { requiresignin, adminMiddleware } = require("../../common-middleware");
 const {
     updateOrder,
     getCustomerOrders,
-} = require("../../controller/admin/order.admin");
+} = require("../../controllers/admin/order.admin");
 const router = express.Router();
 
-router.post(`/order/update`, requireSignin, adminMiddleware, updateOrder);
+router.post(`/order/update`, requiresignin, adminMiddleware, updateOrder);
 router.post(
     `/order/getCustomerOrders`,
-    requireSignin,
+    requiresignin,
     adminMiddleware,
     getCustomerOrders
 );

@@ -1,14 +1,9 @@
 import { authConstants } from "../actions/constants"
 
 const initstate = {
-    token: null,
-    user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        picture: ''
-    },
-    authenticate: false,
+    token: localStorage.getItem('token'),
+    user: JSON.parse(localStorage.getItem('user')),
+    authenticate: localStorage.getItem('token') ? true : false,
     authenticating: false,
     loading: false,
     error: null,
@@ -49,6 +44,16 @@ export default (state = initstate, action) => {
                 error: action.payload.error,
                 loading: false
             }
+            break;
+        case authConstants.SIGNUP_REQUEST:
+            break;
+        case authConstants.SIGNUP_SUCCESS:
+            break;
+        case authConstants.SIGNUP_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+            };
             break;
     }
     return state;

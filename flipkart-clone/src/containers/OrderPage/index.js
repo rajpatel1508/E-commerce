@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrders } from "../../actions";
 import Layout from "../../components/Layout";
-import Card from "../../components/UI/Card";
+import Card from "../../components/UI/card";
 import { BiRupee } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 import "./style.css";

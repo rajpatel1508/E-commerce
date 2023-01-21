@@ -3,11 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "../../actions";
 import { MaterialButton, MaterialInput } from "../../components/MaterialUI";
 
-/**
- * @author
- * @function AddressForm
- **/
-
 const AddressForm = (props) => {
   const { initialData } = props;
   const [name, setName] = useState(initialData ? initialData.name : "");
@@ -61,18 +56,16 @@ const AddressForm = (props) => {
         addressType,
       },
     };
-    console.log(payload);
     if (id) {
       payload.address._id = id;
     }
+    
     dispatch(addAddress(payload));
     setSubmitFlag(true);
   };
 
   useEffect(() => {
-    console.log("addressCount", user.address);
     if (submitFlag) {
-      console.log("where are we", user);
       let _address = {};
       if (id) {
         _address = {

@@ -8,12 +8,14 @@ import PriceDetails from "../../components/PriceDetails";
 
 import "./style.css";
 import { MaterialButton } from "../../components/MaterialUI";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = (props) => {
     const cart = useSelector((state) => state.cart);
     const auth = useSelector((state) => state.auth);
     const [cartItems, setCartItems] = useState(cart.cartItems);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setCartItems(cart.cartItems);
@@ -86,7 +88,7 @@ const CartPage = (props) => {
                         <div style={{ width: "250px" }}>
                             <MaterialButton
                                 title="PLACE ORDER"
-                                onClick={() => props.history.push(`/checkout`)}
+                                onClick={() => navigate(`/checkout`)}
                             />
                         </div>
                     </div>

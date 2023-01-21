@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 })
 //Assigning storage
 const upload = multer({ storage: storage });
+
 //API to create new category
 router.post('/category/create',requiresignin, adminMiddleware, upload.single("categoryImage") , createCategory);
 //API to get categories

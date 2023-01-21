@@ -22,6 +22,7 @@ export const getAddress = () => {
                 });
             }
         } catch (error) {
+            console.log("getaddress")
             console.log(error);
         }
     };
@@ -33,7 +34,6 @@ export const addAddress = (payload) => {
             const res = await axiosIntance.post(`/user/address/create`, { payload });
             dispatch({ type: userConstants.ADD_USER_ADDRESS_REQUEST });
             if (res.status === 201) {
-                console.log(res);
                 const {
                     address: { address },
                 } = res.data;
@@ -49,6 +49,7 @@ export const addAddress = (payload) => {
                 });
             }
         } catch (error) {
+            console.log("getaddress")
             console.log(error);
         }
     };
@@ -60,7 +61,6 @@ export const addOrder = (payload) => {
             const res = await axiosIntance.post(`/addOrder`, payload);
             dispatch({ type: userConstants.ADD_USER_ORDER_REQUEST });
             if (res.status === 201) {
-                console.log(res);
                 const { order } = res.data;
                 dispatch({
                     type: cartConstants.RESET_CART,
@@ -77,6 +77,7 @@ export const addOrder = (payload) => {
                 });
             }
         } catch (error) {
+            console.log("addorder")
             console.log(error);
         }
     };
@@ -88,7 +89,6 @@ export const getOrders = () => {
             const res = await axiosIntance.get(`/getOrders`);
             dispatch({ type: userConstants.GET_USER_ORDER_REQUEST });
             if (res.status === 200) {
-                console.log(res);
                 const { orders } = res.data;
                 dispatch({
                     type: userConstants.GET_USER_ORDER_SUCCESS,
@@ -102,6 +102,7 @@ export const getOrders = () => {
                 });
             }
         } catch (error) {
+            console.log("getorders")
             console.log(error);
         }
     };
@@ -114,7 +115,6 @@ export const getOrder = (payload) => {
             const res = await axiosIntance.post(`/getOrder`, payload);
             dispatch({ type: userConstants.GET_USER_ORDER_DETAILS_REQUEST });
             if (res.status === 200) {
-                console.log(res);
                 const { order } = res.data;
                 dispatch({
                     type: userConstants.GET_USER_ORDER_DETAILS_SUCCESS,
@@ -128,6 +128,7 @@ export const getOrder = (payload) => {
                 });
             }
         } catch (error) {
+            console.log("getorder")
             console.log(error);
         }
     };

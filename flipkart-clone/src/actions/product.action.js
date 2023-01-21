@@ -3,7 +3,7 @@ import { productConstants } from "./constants"
 
 export const getProductsBySlug = (slug) => {
     return async dispatch => {
-        const res = await axiosInstance.get(`/product/${slug}`)
+        const res = await axiosInstance.get(`/products/${slug}`)
         if (res.status === 200) {
             dispatch({
                 type: productConstants.GET_PRODUCTS_BY_SLUG,
@@ -37,19 +37,18 @@ export const getProductPage = (payload) => {
 export const getProductDetailsById = (payload) => {
     return async dispatch => {
         dispatch({ type: productConstants.GET_PRODUCT_DETAILS_BY_ID_REQUEST });
-        let res;
         try {
             const { productId } = payload.params;
             
-            res = await axiosInstance.get(`/product/${productId}`);
-            
+            const res = await axiosInstance.get(`/product/${productId}`);
             dispatch({
                 type: productConstants.GET_PRODUCT_DETAILS_BY_ID_SUCCESS,
                 payload: { productDetails: res.data.product }
             });
 
         } catch (error) {
-            
+            console.log("getProductDetailsById")
+            console.log(error)
             dispatch({
                 type: productConstants.GET_PRODUCT_DETAILS_BY_ID_FAILURE,
                 payload: { error }

@@ -2,19 +2,20 @@ const Product = require("../models/product");
 const shortid = require("shortid");
 const slugify = require("slugify");
 const Category = require("../models/category");
+const fs = require('fs');
 
 exports.createProduct = (req, res) => {
         //res.status(200).json( { file: req.files, body: req.body } );
 
-        const { name, price, description, category, quantity, createdBy } = req.body;
+        const { name, price, description, category, quantity, createdBy } = req.fields;
         let productPictures = [];
-
-        if (req.files.length > 0) {
-                productPictures = req.files.map((file) => {
-                        return { img: file.location };
+        // console.log(req.fields);
+        if (req.files) {
+                productPictures = req.files.productPictures.map((file) => {
+                        return { data: fs.readFileSync(file.path), contentType: file.type };
                 });
         }
-
+        
         const product = new Product({
                 name: name,
                 slug: slugify(name),

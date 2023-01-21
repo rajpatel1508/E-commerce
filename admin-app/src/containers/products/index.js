@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Layout from '../../components/layout'
-import { Button, Col, Container, Modal, Row, Table } from 'react-bootstrap'
+import { Col, Container, Modal, Row, Table } from 'react-bootstrap'
 import Input from '../../components/UI/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../actions/product.action';
+import { addProduct, deleteProductById } from '../../actions/product.action';
 import NewModal from '../../components/UI/Modal';
 import './style.css';
 import { generatePublicUrl } from '../../urlConfig';
@@ -22,20 +22,26 @@ export default function Products() {
     const product = useSelector(state => state.product)
 
     const dispatch = useDispatch();
+
     const handleClose = () => {
-        const form = new FormData();
-        form.append('name', name);
-        form.append('quantity', quantity);
-        form.append('price', price);
-        form.append('description', description);
-        form.append('category', categoryId);
-        for (let pic of productPictures) {
-            form.append('productPictures', pic);
-        }
-        dispatch(addProduct(form));
         setShow(false);
     }
+
+    const submitProductForm = () => {
+        const form = new FormData();
+        form.append("name", name);
+        form.append("quantity", quantity);
+        form.append("price", price);
+        form.append("description", description);
+        form.append("category", categoryId);
+        for (let pic of productPictures) {
+            form.append("productPictures", pic);
+        }
+        dispatch(addProduct(form)).then(() => setShow(false));
+    };
+
     const handleShow = () => setShow(true);
+
     const createCategoryList = (categories, option = []) => {
         for (let category of categories) {
             option.push({ value: category._id, name: category.name });
@@ -61,20 +67,36 @@ export default function Products() {
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Category</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        product.products.length > 0 ? product.products.map(product =>
-                            <tr onClick={() => showProductDetailsModal(product)} key={product._id}>
-                                <td>3</td>
+                    {product.products.length > 0
+                        ? product.products.map((product) => (
+                            <tr key={product._id}>
+                                <td>2</td>
                                 <td>{product.name}</td>
                                 <td>{product.price}</td>
                                 <td>{product.quantity}</td>
-                                <td>{ product.category.name}</td>
-                            </tr>) : null
-                    }
-
+                                <td>{product.category.name}</td>
+                                <td>
+                                    <button onClick={() => showProductDetailsModal(product)}>
+                                        info
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            const payload = {
+                                                productId: product._id,
+                                            };
+                                            dispatch(deleteProductById(payload));
+                                        }}
+                                    >
+                                        del
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                        : null}
                 </tbody>
             </Table>)
     }
@@ -85,6 +107,7 @@ export default function Products() {
                 show={show}
                 handleClose={handleClose}
                 modaltitle={"Add new product"}
+                onSubmit={submitProductForm}
             >
                 <Input
                     label="Name"
@@ -119,6 +142,11 @@ export default function Products() {
                             <option key={option.value} value={option.value}>{option.name}</option>)
                     }
                 </select>
+                {productPictures.length > 0
+                    ? productPictures.map((pic, index) => (
+                        <div key={index}>{pic.name}</div>
+                    ))
+                    : null}
                 <input type="file" name="productPicture" onChange={handleProductPicture} />
             </NewModal>);
     }
@@ -158,7 +186,7 @@ export default function Products() {
                     </Col>
                     <Col md="6">
                         <label className='key'>Category</label>
-                        <p className='value'>{ productDetails.category.name}</p>
+                        <p className='value'>{productDetails.category.name}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -179,7 +207,7 @@ export default function Products() {
                         </div>
                     </Col>
                 </Row>
-            </NewModal >
+            </NewModal>
         )
     }
 

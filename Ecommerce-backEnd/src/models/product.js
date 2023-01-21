@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const { required } = require("nodemon/lib/config");
-const { stringify } = require("nodemon/lib/utils");
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,7 +16,7 @@ const productSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
-        required:true
+        required: true
     },
     description: {
         type: String,
@@ -29,7 +27,10 @@ const productSchema = new mongoose.Schema({
         type: Number
     },
     productPictures: [
-        { img: { type: String } }
+        {
+            data: Buffer,
+            contentType: String
+        }
     ],
     reviews: [
         {
@@ -43,13 +44,13 @@ const productSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        required:true
+        required: true
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         updatedAt: Date,
-        required:true
+        required: true
     }
 }, { timestamps: true });
 

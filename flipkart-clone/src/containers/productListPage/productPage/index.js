@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getProductPage } from '../../../actions';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
@@ -15,7 +15,7 @@ export default function ProductPage(props) {
         type: searchParams.get('type')
     };
     const { page } = product;
-
+    console.log(product);
 
     useEffect(() => {
         const payload = {
@@ -32,17 +32,17 @@ export default function ProductPage(props) {
             >
                 {
                     page.banners && page.banners.map((banner, index) =>
-                        <a key={index} style={{ display: 'block' }} href={banner.navigateTo}>
+                        <Link key={index} style={{ display: 'block' }} to={banner.navigateTo}>
                             <img src={banner.img} alt="" />
-                        </a>
+                        </Link>
                     )
                 }
             </Carousel>
-            <div style={{display: 'flex',justifyContent: 'center',flexWrap: 'wrap',margin: '10px 0'}}>
+            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', margin: '10px 0' }}>
                 {
                     page.products && page.products.map((product, index) =>
-                        <Card key={index} style={{width: '400px',height: '200px',margin: '5px'}}>
-                            <img src={product.img} style={{width: '100%',height: '100%'}} />
+                        <Card key={index} style={{ width: '400px', height: '200px', margin: '5px' }}>
+                            <img src={product.img} style={{ width: '100%', height: '100%' }} />
                         </Card>
 
                     )

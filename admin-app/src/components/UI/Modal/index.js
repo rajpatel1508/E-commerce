@@ -22,7 +22,6 @@ export default function NewModal(props) {
                             Save
                         </Button>
                 }
-
             </Modal.Footer>
         </Modal>
     )

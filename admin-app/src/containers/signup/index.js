@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import Layout from '../../components/layout'
 import Button from 'react-bootstrap/Button';
@@ -17,6 +17,16 @@ export default function Signup(props) {
     const [lastName, setLastName] = useState('');
     const [error, setError] = useState('')
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (!user.loading) {
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setPassword("");
+        }
+    }, [user.loading]);
+    
     const userSignup = (e) => {
         e.preventDefault();
         const user = {

@@ -9,18 +9,20 @@ function runUpdate(condition, updateData) {
 }
 
 exports.addItemToCart = (req, res) => {
-    Cart.findOne({ user: req.user._id }).exec((error, cart) => {
+    console.log(req.user._id);
+    const user = req.user._id;
+    Cart.findOne({user: user}).exec((error, cart) => {
         if (error) return res.status(400).json({ error });
         if (cart) {
             //if cart already exists then update cart by quantity
             let promiseArray = [];
-
+            // console.log(req.body.cartItems);
             req.body.cartItems.forEach((cartItem) => {
-                const product = cartItem.product;
-                const item = cart.cartItems.find((c) => c.product == product);
+                const product = cartItem.products;
+                const item = cart.cartItems.find((c) => c.products == product);
                 let condition, update;
                 if (item) {
-                    condition = { user: req.user._id, "cartItems.product": product };
+                    condition = { user: req.user._id, "cartItems.products": product };
                     update = {
                         $set: {
                             "cartItems.$": cartItem,
@@ -35,12 +37,13 @@ exports.addItemToCart = (req, res) => {
                     };
                 }
                 promiseArray.push(runUpdate(condition, update));
-                
+
             });
             Promise.all(promiseArray)
                 .then((response) => res.status(201).json({ response }))
                 .catch((error) => res.status(400).json({ error }));
         } else {
+            console.log(req.body.cartItems);
             //if cart not exist then create a new cart
             const cart = new Cart({
                 user: req.user._id,
@@ -58,17 +61,17 @@ exports.addItemToCart = (req, res) => {
 
 exports.getCartItems = (req, res) => {
     Cart.findOne({ user: req.user._id })
-        .populate("cartItems.product", "_id name price productPictures")
+        .populate("cartItems.products", "_id name price productPictures")
         .exec((error, cart) => {
             if (error) return res.status(400).json({ error });
             if (cart) {
                 let cartItems = {};
                 cart.cartItems.forEach((item, index) => {
-                    cartItems[item.product._id.toString()] = {
-                        _id: item.product._id.toString(),
-                        name: item.product.name,
-                        img: item.product.productPictures[0].img,
-                        price: item.product.price,
+                    cartItems[item.products._id.toString()] = {
+                        _id: item.products._id.toString(),
+                        name: item.products.name,
+                        img: item.products.productPictures[0].img,
+                        price: item.products.price,
                         qty: item.quantity,
                     };
                 });
@@ -87,7 +90,7 @@ exports.removeCartItems = (req, res) => {
             {
                 $pull: {
                     cartItems: {
-                        product: productId,
+                        products: productId,
                     },
                 },
             }

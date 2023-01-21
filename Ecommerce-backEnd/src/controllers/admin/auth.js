@@ -14,15 +14,15 @@ exports.signup = (req, res) => {
                 })
             }
             const {
-                firstname,
-                lastname,
+                firstName,
+                lastName,
                 email,
                 password
             } = req.body;
             const hash_password = await bcrypt.hash(password, 10);
             const _user = new User({
-                firstname,
-                lastname,
+                firstName,
+                lastName,
                 email,
                 hash_password,
                 username: shortid.generate(),
@@ -55,12 +55,12 @@ exports.signin = (req, res) => {
                 const isPassword = await user.authenticate(req.body.password);
                 if (isPassword && user.role === 'admin') {
                     const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                    const { _id, firstname, lastname, email, role, fullname } = user;
+                    const { _id, firstName, lastName, email, role, fullname } = user;
                     res.cookie('token', token, { expiresIn: '1h' });
                     return res.status(200).json({
                         token,
                         user: {
-                            _id, firstname, lastname, email, role, fullname
+                            _id, firstName, lastName, email, role, fullname
                         }
                     });
                 } else {

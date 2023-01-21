@@ -1,19 +1,15 @@
-import { productConstants } from "../actions/constants"
+import { productConstants } from "../actions/constants";
 
 const initState = {
     products: [],
-    productsByPrice: {
-        under5k: [],
-        under10k: [],
-        under20: [],
-        under30k: []
-    },
+    priceRange: {},
+    productsByPrice: {},
     pageRequest: false,
     page: {},
     error: null,
     productDetails: {},
     loading: false,
-}
+};
 
 export default (state = initState, action) => {
     switch (action.type) {
@@ -21,30 +17,31 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 products: action.payload.products,
+                priceRange: action.payload.priceRange,
                 productsByPrice: {
-                    ...action.payload.productsByPrice
-                }
-            }
+                    ...action.payload.productsByPrice,
+                },
+            };
             break;
-        case productConstants.GET_PRODUCTS_PAGE_REQUEST:
+        case productConstants.GET_PRODUCT_PAGE_REQUEST:
             state = {
                 ...state,
-                pageRequest: true
-            }
+                pageRequest: true,
+            };
             break;
-        case productConstants.GET_PRODUCTS_PAGE_SUCCESS:
+        case productConstants.GET_PRODUCT_PAGE_SUCCESS:
             state = {
                 ...state,
                 page: action.payload.page,
-                pageRequest: false
-            }
+                pageRequest: false,
+            };
             break;
-        case productConstants.GET_PRODUCTS_PAGE_FAILURE:
+        case productConstants.GET_PRODUCT_PAGE_FAILURE:
             state = {
                 ...state,
+                pageRequest: false,
                 error: action.payload.error,
-                pageRequest: false
-            }
+            };
             break;
         case productConstants.GET_PRODUCT_DETAILS_BY_ID_REQUEST:
             state = {
@@ -67,5 +64,6 @@ export default (state = initState, action) => {
             };
             break;
     }
+
     return state;
-}
+};

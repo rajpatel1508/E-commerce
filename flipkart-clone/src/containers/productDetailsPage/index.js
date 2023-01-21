@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react'
 import { IoIosArrowForward, IoIosStar, IoMdCart } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addToCart, getProductDetailsById } from '../../actions';
 import Layout from '../../components/Layout'
 import { MaterialButton } from '../../components/MaterialUI';
 import './style.css'
 import { BiRupee } from "react-icons/bi";
 import { AiFillThunderbolt } from "react-icons/ai";
+import { generatePublicUrl } from '../../urlConfig';
 
 export default function ProductDetailsPage(props) {
     const dispatch = useDispatch();
     const { productId } = useParams();
+    const navigate = useNavigate();
     const product = useSelector(state => state.product);
-    console.log({ product ,productId });
 
     useEffect(() => {
         const payload = {
@@ -35,14 +36,14 @@ export default function ProductDetailsPage(props) {
                     <div className="verticalImageStack">
                         {product.productDetails.productPictures.map((thumb, index) => (
                             <div className="thumbnail">
-                                <img src={thumb.img} alt={thumb.img} />
+                                <img src={generatePublicUrl(thumb.img)} alt={thumb.img} />
                             </div>
                         ))}
                     </div>
                     <div className="productDescContainer">
                         <div className="productDescImgContainer">
                             <img
-                                src={product.productDetails.productPictures[0].img}
+                                src={generatePublicUrl(product.productDetails.productPictures[0].img)}
                                 alt={`${product.productDetails.productPictures[0].img}`}
                             />
                         </div>
@@ -61,7 +62,7 @@ export default function ProductDetailsPage(props) {
                                     const { _id, name, price } = product.productDetails;
                                     const img = product.productDetails.productPictures[0].img;
                                     dispatch(addToCart({ _id, name, price, img }));
-                                    props.history.push(`/cart`);
+                                    navigate(`/cart`);
                                 }}
                             />
                             <MaterialButton

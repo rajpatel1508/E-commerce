@@ -81,18 +81,6 @@ export default function NewPage(props) {
                 <Container>
                     <Row>
                         <Col>
-                            {/* <select
-                                className='form-control form-control-sm'
-                                value={categoryId}
-                                onChange={onCategoryChange}
-                            >
-                                <option value="">select category</option>
-                                {
-                                    categories.map(cat =>
-                                        <option key={cat._id} value={cat._id}>{cat.name}</option>
-                                    )
-                                }
-                            </select> */}
                             <Input
                                 type='select'
                                 value={categoryId}
@@ -108,7 +96,7 @@ export default function NewPage(props) {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder={'Page Title'}
-                                className='form-control-sm'
+                                className=''
                             />
                         </Col>
                     </Row>
@@ -118,7 +106,7 @@ export default function NewPage(props) {
                                 value={desc}
                                 onChange={(e) => setDesc(e.target.value)}
                                 placeholder={'Page Description'}
-                                className='form-control-sm'
+                                className=''
                             />
                         </Col>
                     </Row>

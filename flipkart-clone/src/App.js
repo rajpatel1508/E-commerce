@@ -16,11 +16,12 @@ function App() {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
 
-  useEffect(() => {
-    if (!auth.authenticate) {
-      dispatch(isUserLoggedIn());
-    }
-  }, [auth.authenticate]);
+  // useEffect(() => {
+  //   if (!auth.authenticate) {
+  //     console.log('here')
+  //     dispatch(isUserLoggedIn());
+  //   }
+  // }, [auth.authenticate]);
 
   useEffect(() => {
     dispatch(updateCart());

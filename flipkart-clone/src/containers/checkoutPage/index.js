@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addOrder, getAddress, getCartItems } from "../../actions";
 import Layout from "../../components/Layout";
 import {
@@ -103,6 +104,7 @@ const CheckoutPage = (props) => {
   const [confirmOrder, setConfirmOrder] = useState(false);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onAddressSubmit = (addr) => {
     setSelectedAddress(addr);
@@ -111,7 +113,6 @@ const CheckoutPage = (props) => {
   };
 
   const selectAddress = (addr) => {
-    //console.log(addr);
     const updatedAddress = address.map((adr) =>
       adr._id === addr._id
         ? { ...adr, selected: true }
@@ -181,7 +182,7 @@ const CheckoutPage = (props) => {
 
   useEffect(() => {
     if (confirmOrder && user.placedOrderId) {
-      props.history.push(`/order_details/${user.placedOrderId}`);
+      navigate(`/order_details/${user.placedOrderId}`);
     }
   }, [user.placedOrderId]);
 
@@ -197,7 +198,7 @@ const CheckoutPage = (props) => {
             body={
               auth.authenticate ? (
                 <div className="loggedInId">
-                  <span style={{ fontWeight: 500 }}>{auth.user.fullName}</span>
+                  <span style={{ fontWeight: 500 }}>{auth.user.fullname}</span>
                   <span style={{ margin: "0 5px" }}>{auth.user.email}</span>
                 </div>
               ) : (

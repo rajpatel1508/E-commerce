@@ -25,6 +25,7 @@ export const signup = (user) => {
                 dispatch({ type: authConstants.SIGNUP_FAILURE, payload: { error } });
             }
         } catch (error) {
+            console.log({error})
             const { data } = error.response;
             dispatch({
                 type: authConstants.SIGNUP_FAILURE,
@@ -85,21 +86,21 @@ export const isUserLoggedIn = () => {
 };
 
 export const signout = () => {
-    return async (dispatch) => {
-        dispatch({ type: authConstants.LOGOUT_REQUEST });
-        // localStorage.removeItem('user');
-        // localStorage.removeItem('token');
-        localStorage.clear();
-        dispatch({ type: authConstants.LOGOUT_SUCCESS });
-        dispatch({ type: cartConstants.RESET_CART });
-        //const res = await axios.post(`/admin/signout`);
-        // if(res.status === 200){
+    // return async (dispatch) => {
+    //     dispatch({ type: authConstants.LOGOUT_REQUEST });
+    //     // localStorage.removeItem('user');
+    //     // localStorage.removeItem('token');
+    //     localStorage.clear();
+    //     dispatch({ type: authConstants.LOGOUT_SUCCESS });
+    //     dispatch({ type: cartConstants.RESET_CART });
+    //     //const res = await axios.post(`/admin/signout`);
+    //     // if(res.status === 200){
 
-        // }else{
-        //     dispatch({
-        //         type: authConstants.LOGOUT_FAILURE,
-        //         payload: { error: res.data.error }
-        //     });
-        // }
-    };
+    //     // }else{
+    //     //     dispatch({
+    //     //         type: authConstants.LOGOUT_FAILURE,
+    //     //         payload: { error: res.data.error }
+    //     //     });
+    //     // }
+    // };
 };

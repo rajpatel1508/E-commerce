@@ -1,25 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { getOrder } from "../../actions";
 import Layout from "../../components/Layout";
-import Card from "../../components/UI/Card";
+import Card from "../../components/UI/card";
 import Price from "../../components/UI/Price";
 
 import "./style.css";
 
-/**
- * @author
- * @function OrderDetails
- **/
-
 const OrderDetailsPage = (props) => {
     const dispatch = useDispatch();
+    const location = useLocation()
     const orderDetails = useSelector((state) => state.user.orderDetails);
-
+    let { orderId } = useParams();
     useEffect(() => {
-        console.log({ props });
         const payload = {
-            orderId: props.match.params.orderId,
+            orderId: orderId,
         };
         dispatch(getOrder(payload));
     }, []);

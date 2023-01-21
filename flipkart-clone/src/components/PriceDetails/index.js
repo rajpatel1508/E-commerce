@@ -1,11 +1,6 @@
 import React from "react";
 import Card from "../../components/UI/card";
 
-/**
- * @author
- * @function PriceDetails
- **/
-
 const PriceDetails = (props) => {
   return (
     <Card headerLeft={"Price Details"} style={{ maxWidth: "380px" }}>
