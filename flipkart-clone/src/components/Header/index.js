@@ -66,7 +66,7 @@ const Header = (props) => {
   const renderLoggedInMenu = () => {
     return (
       <DropdownMenu
-        menu={<Link className="fullName">{auth.user.fullname}</Link>}
+        menu={<Link style={{ textDecoration: 'none' }} className="fullName">{auth.user.fullname}</Link>}
         menus={[
           { label: "My Profile", href: "", icon: null },
           { label: "SuperCoin Zone", href: "", icon: null },
@@ -94,6 +94,7 @@ const Header = (props) => {
         menu={
           <Link
             className="loginButton"
+            style={{ textDecoration: 'none' }}
             onClick={() => {
               setSignup(false);
               setLoginModal(true);
@@ -177,7 +178,6 @@ const Header = (props) => {
                   label="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                // rightElement={<a href="#">Forgot?</a>}
                 />
                 <MaterialButton
                   title={signup ? "Register" : "Login"}
@@ -205,13 +205,13 @@ const Header = (props) => {
       <div className="subHeader">
         {/* Logo  */}
         <div className="logo">
-          <Link href="">
+          <Link to={'/'}>
             <img src={flipkartLogo} className="logoimage" alt="" />
           </Link>
-          <Link style={{ marginTop: "-10px" }}>
+          <Link style={{ textDecoration: 'none' }}>
             <span className="exploreText">Explore</span>
             <span className="plusText">Plus</span>
-            <img src={goldenStar} className="goldenStar" alt="" />
+            <img style={{display:'inline'}} src={goldenStar} className="goldenStar" alt="" />
           </Link>
         </div>
         {/* logo ends here */}
@@ -243,7 +243,7 @@ const Header = (props) => {
           {auth.authenticate ? renderLoggedInMenu() : renderNonLoggedInMenu()}
           <DropdownMenu
             menu={
-              <Link className="more">
+              <Link style={{ textDecoration: 'none' }} className="more">
                 <span>More</span>
                 <IoIosArrowDown />
               </Link>
@@ -257,7 +257,7 @@ const Header = (props) => {
             ]}
           />
           <div>
-            <Link to={`/cart`} className="cart">
+            <Link style={{ textDecoration: 'none' }} to={`/cart`} className="cart">
               <Cart count={Object.keys(cart.cartItems).length} />
               <span style={{ margin: "0 10px" }}>Cart</span>
             </Link>

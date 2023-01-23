@@ -5,7 +5,6 @@ const { createProduct, getProductsBySlug, getProductDetailsById, deleteProductBy
 const multer = require('multer');
 const shortid = require('shortid');
 const path = require('path');
-const formidable = require('express-formidable');
 
 //Function to create storage for files
 const storage = multer.diskStorage({
@@ -20,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 //API to create new product
-router.post('/product/create', requiresignin, adminMiddleware, formidable({ multiples: true }), createProduct);
+router.post('/product/create', requiresignin, adminMiddleware, upload.array("productPictures"), createProduct);
 //API to get Products
 router.get('/products/:slug', getProductsBySlug);
 router.get('/product/:productId', getProductDetailsById);

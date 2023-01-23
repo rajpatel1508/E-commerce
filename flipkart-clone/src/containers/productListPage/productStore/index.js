@@ -7,6 +7,7 @@ import Card from '../../../components/UI/card';
 import Price from '../../../components/UI/Price';
 import Rating from '../../../components/UI/Rating';
 import { generatePublicUrl } from '../../../urlConfig';
+import './style.css';
 
 export default function ProductStore(props) {
     const { slug } = useParams();
@@ -17,6 +18,7 @@ export default function ProductStore(props) {
     useEffect(() => {
         dispatch(getProductsBySlug(slug));
     }, []);
+    console.log({ product });
 
     return (
         <>

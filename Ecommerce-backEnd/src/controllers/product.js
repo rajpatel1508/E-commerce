@@ -7,12 +7,12 @@ const fs = require('fs');
 exports.createProduct = (req, res) => {
         //res.status(200).json( { file: req.files, body: req.body } );
 
-        const { name, price, description, category, quantity, createdBy } = req.fields;
+        const { name, price, description, category, quantity, createdBy } = req.body;
         let productPictures = [];
-        // console.log(req.fields);
-        if (req.files) {
-                productPictures = req.files.productPictures.map((file) => {
-                        return { data: fs.readFileSync(file.path), contentType: file.type };
+        
+        if (req.files.length > 0) {
+                productPictures = req.files.map((file) => {
+                        return { img: file.filename };
                 });
         }
         
@@ -60,6 +60,7 @@ exports.getProductsBySlug = (req, res) => {
                                                                         under15k: 15000,
                                                                         under20k: 20000,
                                                                         under30k: 30000,
+                                                                        under50k: 50000,
                                                                 },
                                                                 productsByPrice: {
                                                                         under5k: products.filter((product) => product.price <= 5000),
@@ -74,6 +75,9 @@ exports.getProductsBySlug = (req, res) => {
                                                                         ),
                                                                         under30k: products.filter(
                                                                                 (product) => product.price > 20000 && product.price <= 30000
+                                                                        ),
+                                                                        under50k: products.filter(
+                                                                                (product) => product.price > 30000 && product.price <= 50000
                                                                         ),
                                                                 },
                                                         });

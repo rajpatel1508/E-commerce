@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOrder } from "../../actions";
+import { getCustomerOrders, updateOrder } from "../../actions";
 import Layout from "../../components/layout";
 import Card from "../../components/UI/Card";
+import "./style.css";
 
 export default function Orders() {
     const order = useSelector((state) => state.order);
     const [type, setType] = useState("");
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(getCustomerOrders());
+    }, [])
+    
     const onOrderUpdate = (orderId) => {
         const payload = {
             orderId,
@@ -16,6 +21,7 @@ export default function Orders() {
         };
         dispatch(updateOrder(payload));
     };
+    console.log({ order });
 
     const formatDate = (date) => {
         if (date) {
@@ -76,8 +82,7 @@ export default function Orders() {
                         <div className="orderTrack">
                             {orderItem.orderStatus.map((status) => (
                                 <div
-                                    className={`orderStatus ${status.isCompleted ? "active" : ""
-                                        }`}
+                                    className={`orderStatus ${status.isCompleted ? "active" : ""}`}
                                 >
                                     <div
                                         className={`point ${status.isCompleted ? "active" : ""}`}

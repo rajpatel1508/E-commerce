@@ -1,0 +1,103 @@
+.homebanner {
+    position: relative;
+}
+
+.homebanner video {
+    width: 100%;
+    height: auto;
+}
+
+.homebanner .banner-text {
+    position: absolute;
+    top: 15vh;
+    z-index: 9;
+    left: 10%;
+    width: 500px;
+}
+
+.homebanner .banner-text p {
+    color: #001f4e;
+    font-size: 18px;
+    line-height: 40px;
+}
+
+.my-xl-3 {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+    width: 100%;
+    padding-right: var(--bs-gutter-x, .75rem);
+    padding-left: var(--bs-gutter-x, .75rem);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 1400px) {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 1320px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm {
+        max-width: 960px;
+    }
+}
+
+.about .aboutin {
+    background: rgba(0, 0, 0, 0) linear-gradient(311deg, #ebecf0 0%, #ebecf0 100%) 0% 0% no-repeat padding-box;
+    box-shadow: -3px -6px 16px 0px rgb(253 253 253 / 69%), 9px 5px 14px 0px rgb(0 0 0 / 15%);
+    border: 0px solid #fff;
+    border-radius: 15px;
+    width: 70%;
+    margin: 0 auto;
+    padding: 3em 5em;
+    position: relative;
+    top: -2em;
+}
+
+@media (min-width: 576px) {
+    .text-sm-start {
+        text-align: left !important;
+    }
+}
+
+.about .aboutin h2 {
+    color: #001f4e;
+    font-size: 30px;
+    line-height: 40px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}

@@ -4,6 +4,7 @@
     background: #2874f0;
 }
 
+
 .subHeader {
     max-width: 1100px;
     width: 100%;
@@ -30,9 +31,12 @@
 .exploreText {
     font-size: 10px;
     font-style: italic;
+    color: #fff;
+    
 }
 
 .plusText {
+    font-weight: bold;
     font-size: 10px;
     margin: 0 2px;
     text-transform: capitalize;
